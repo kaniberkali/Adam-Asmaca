@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,6 +46,34 @@ namespace Adam_Asmaca
         }
 
         int hataSayac = 0;
+        Random rnd = new Random();
+        List<string> secilenKelimeler = new List<string>();
+        List<string> kelimeler = new List<string>();
+        string kelime = "";
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                string[] paths = new DirectoryInfo("kelimeler").GetFiles("*.txt", SearchOption.AllDirectories).Select(o => o.Name).ToArray();
+                foreach (string path in paths)
+                    kelimeler.Add(path.Replace(".txt", ""));
+                if (kelimeler.Count > 0)
+                {
+                    puan = Properties.Settings.Default.puan;
+                    label7.Text = puan.ToString();
+                    oyunOlustur();
+                }
+                else
+                {
+                    MessageBox.Show("Programın kelimeler listesindeki metin belgeleri eksik programı yeniden yüklemeyi deneyin.", "@kodzamani.tk");
+                    Application.Exit();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Programın kelimeler listesindeki metin belgeleri eksik programı yeniden yüklemeyi deneyin.", "@kodzamani.tk");
+                Application.Exit();
+            }
 
         string[] kelimeler = { "Isimler", "Meyveler", "Nesneler" };
         Random rnd = new Random();
@@ -60,6 +88,7 @@ namespace Adam_Asmaca
         private void oyunOlustur()
         {
             pictureBox1.Load("Resimler/" + hataSayac + ".png");
+            label3.Text = kelimeler[rnd.Next(kelimeler.Count)];
             label3.Text = kelimeler[rnd.Next(kelimeler.Length)];
             FileStream fs = new FileStream("Kelimeler/" + label3.Text + ".txt", FileMode.Open, FileAccess.Read);
             StreamReader sw = new StreamReader(fs);
