@@ -74,22 +74,11 @@ namespace Adam_Asmaca
                 MessageBox.Show("Programın kelimeler listesindeki metin belgeleri eksik programı yeniden yüklemeyi deneyin.", "@kodzamani.tk");
                 Application.Exit();
             }
-
-        string[] kelimeler = { "Isimler", "Meyveler", "Nesneler" };
-        Random rnd = new Random();
-        List<string> secilenKelimeler = new List<string>();
-        string kelime = "";
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            puan = Properties.Settings.Default.puan;
-            label7.Text = puan.ToString();
-            oyunOlustur();
         }
         private void oyunOlustur()
         {
             pictureBox1.Load("Resimler/" + hataSayac + ".png");
             label3.Text = kelimeler[rnd.Next(kelimeler.Count)];
-            label3.Text = kelimeler[rnd.Next(kelimeler.Length)];
             FileStream fs = new FileStream("Kelimeler/" + label3.Text + ".txt", FileMode.Open, FileAccess.Read);
             StreamReader sw = new StreamReader(fs);
             string yazi = sw.ReadLine();
